@@ -65,7 +65,6 @@ function Book({ theme, poems, bookTitle, bookSubtitle, dedication, sound = true 
     if (sound) playPageTurn();
     setAnimating(animLeaf);
     setCurrent(next);
-    setTimeout(() => setAnimating(null), DURATION);
   }, [current, animating, total, sound]);
 
   // keyboard nav
@@ -127,11 +126,17 @@ function Book({ theme, poems, bookTitle, bookSubtitle, dedication, sound = true 
           <div className="book__cover book__cover--right" />
 
           {/* inside front cover (title page) — visible at current=0 on the left */}
-          <div className="book__inside-cover book__inside-cover--front">
+          <div
+            className="book__inside-cover book__inside-cover--front"
+            style={{ visibility: current === 0 ? 'visible' : 'hidden' }}
+          >
             <InsideFrontCover title={bookTitle} subtitle={bookSubtitle} dedication={dedication} theme={theme} />
           </div>
           {/* inside back cover — visible at current=N on the right */}
-          <div className="book__inside-cover book__inside-cover--back">
+          <div
+            className="book__inside-cover book__inside-cover--back"
+            style={{ visibility: current === total ? 'visible' : 'hidden' }}
+          >
             <InsideBackCover theme={theme} />
           </div>
 
@@ -160,6 +165,11 @@ function Book({ theme, poems, bookTitle, bookSubtitle, dedication, sound = true 
                     showHint ? 'is-hint' : '',
                   ].join(' ')}
                   style={{ zIndex: z, transitionDuration: `${DURATION}ms` }}
+                  onTransitionEnd={(e) => {
+                    if (e.currentTarget === e.target && e.propertyName === 'transform') {
+                      setAnimating(null);
+                    }
+                  }}
                 >
                   <div className="book__face book__face--recto">
                     <PageRecto poem={poem} pageNumber={i + 1} theme={theme} />
