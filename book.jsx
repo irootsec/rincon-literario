@@ -219,8 +219,14 @@ function PageRecto({ poem, pageNumber, theme }) {
     return <PageDedication lines={poem.lines} />;
   }
 
+  const density = poem.lines.reduce((sum, line) => {
+    if (line === '') return sum + 0.5;
+    return sum + Math.max(1, Math.ceil(line.length / 48));
+  }, 0);
+  const densityClass = density >= 18 ? 'page--dense' : density >= 10 ? 'page--long' : '';
+
   return (
-    <div className={`page page--recto ${poem.lines.length > 11 ? 'page--long' : ''}`}>
+    <div className={`page page--recto ${densityClass}`}>
       <div className="page__inner">
         <header className="page__header">
           {poem.year && <div className="page__meta">{poem.year}</div>}

@@ -667,24 +667,39 @@
       font-size: 60px;
       line-height: .95;
     }
-    .book--velas .page--long .page__inner {
+    .book--velas .page--long .page__inner,
+    .book--velas .page--dense .page__inner {
       padding-top: 44px;
       padding-bottom: 40px;
     }
-    .book--velas .page--long .page__header {
+    .book--velas .page--long .page__header,
+    .book--velas .page--dense .page__header {
       margin-bottom: 10px;
     }
     .book--velas .page--long .page__title {
       font-size: 48px;
     }
-    .book--velas .page--long .page__rule {
+    .book--velas .page--long .page__rule,
+    .book--velas .page--dense .page__rule {
       margin: 14px 0 16px;
     }
     .book--velas .page--long .page__line {
       font-size: 16px;
       line-height: 1.43;
     }
-    .book--velas .page--long .page__line--break {
+    .book--velas .page--dense .page__inner {
+      padding-top: 34px;
+      padding-bottom: 34px;
+    }
+    .book--velas .page--dense .page__title {
+      font-size: 42px;
+    }
+    .book--velas .page--dense .page__line {
+      font-size: 14px;
+      line-height: 1.34;
+    }
+    .book--velas .page--long .page__line--break,
+    .book--velas .page--dense .page__line--break {
       height: 8px;
     }
     /* Author still elegant */
@@ -709,8 +724,8 @@
 <body>
   <div id="root"></div>
 
-  <script type="text/babel" src="poems.jsx?v=20260527-4"></script>
-  <script type="text/babel" src="book.jsx?v=20260527-4"></script>
+  <script type="text/babel" src="poems.jsx?v=20260527-5"></script>
+  <script type="text/babel" src="book.jsx?v=20260527-5"></script>
   <script type="text/babel">
     (() => {
     function App() {

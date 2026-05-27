@@ -4,8 +4,8 @@
   const DEDICATION_PAGE = {
     kind: 'dedication',
     lines: [
-      'Gracias a quien me impulso siempre a escribir',
-      'Gracias L@u, esta primera version va dedicada a vos',
+      'Quisiera dedicar esta primera version de mi libro de poesias digital a quien me inspira y me impulsa siempre a escribir. ',
+      'L@u si estas leyendo, esta version es para vos!',
     ],
   };
 
