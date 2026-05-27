@@ -4,16 +4,20 @@ Sitio estático para publicar poemas propios en formato de libro.
 
 ## Editar poemas
 
-Cada poema vive en `index.html` dentro de un bloque:
+Cada poema vive en `poems.jsx` dentro de un objeto:
 
-```html
-<article class="sheet poem-sheet" aria-label="Titulo">
-  <h2>Titulo </h2>
-  <pre>Texto crudo del poema</pre>
-</article>
+```js
+{
+  title: 'Titulo ',
+  author: '',
+  year: '',
+  lines: [
+    'Texto crudo del poema',
+  ],
+}
 ```
 
-Para agregar otro, duplicá un bloque `poem-sheet` y pegá el texto dentro de `pre` sin corregirlo ni reformatearlo. Después actualizá la lista `labels` en `script.js` para que el contador incluya la nueva hoja.
+Para agregar otro, duplicá un objeto y pegá el texto dentro de `lines` sin corregirlo ni reformatearlo.
 
 ## Publicación
 
