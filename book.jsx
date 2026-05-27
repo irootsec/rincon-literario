@@ -54,6 +54,7 @@ function Book({ theme, poems, bookTitle, bookSubtitle, dedication, sound = true 
   const dragRef = useRef(null);
 
   const total = poems.length;
+  const poemTotal = poems.filter((poem) => poem.kind !== 'dedication').length;
   const DURATION = 1050;
 
   const flip = useCallback((dir) => {
@@ -172,13 +173,13 @@ function Book({ theme, poems, bookTitle, bookSubtitle, dedication, sound = true 
                   }}
                 >
                   <div className="book__face book__face--recto">
-                    <PageRecto poem={poem} pageNumber={i + 1} theme={theme} />
+                    <PageRecto poem={poem} pageNumber={poem.kind === 'dedication' ? null : i} theme={theme} />
                     <div className="book__sheen" />
                     {/* corner peel hint on first leaf at start */}
                     {showHint && <div className="book__peel" />}
                   </div>
                   <div className="book__face book__face--verso">
-                    <PageVerso poem={poem} pageNumber={i + 1} theme={theme} />
+                    <PageVerso poem={poem} pageNumber={poem.kind === 'dedication' ? null : i} theme={theme} />
                     <div className="book__sheen book__sheen--verso" />
                   </div>
                 </div>
@@ -188,7 +189,7 @@ function Book({ theme, poems, bookTitle, bookSubtitle, dedication, sound = true 
 
           {/* page counter */}
           <div className="book__counter">
-            {current === 0 ? '—' : current} <span>/</span> {total}
+            {current === 0 ? '—' : Math.min(current, poemTotal)} <span>/</span> {poemTotal}
           </div>
 
           {/* nav arrows */}
@@ -214,8 +215,12 @@ function Book({ theme, poems, bookTitle, bookSubtitle, dedication, sound = true 
 // Page faces
 
 function PageRecto({ poem, pageNumber, theme }) {
+  if (poem.kind === 'dedication') {
+    return <PageDedication lines={poem.lines} />;
+  }
+
   return (
-    <div className="page page--recto">
+    <div className={`page page--recto ${poem.lines.length > 11 ? 'page--long' : ''}`}>
       <div className="page__inner">
         <header className="page__header">
           {poem.year && <div className="page__meta">{poem.year}</div>}
@@ -241,6 +246,10 @@ function PageRecto({ poem, pageNumber, theme }) {
 }
 
 function PageVerso({ poem, pageNumber, theme }) {
+  if (poem.kind === 'dedication') {
+    return <div className="page page--verso page--blank" />;
+  }
+
   return (
     <div className="page page--verso">
       <div className="page__inner">
@@ -252,6 +261,20 @@ function PageVerso({ poem, pageNumber, theme }) {
         <footer className="page__footer page__footer--verso">
           <span className="page__num">{pageNumber}</span>
         </footer>
+      </div>
+    </div>
+  );
+}
+
+function PageDedication({ lines }) {
+  return (
+    <div className="page page--dedication">
+      <div className="page__inner">
+        <div className="dedication-note">
+          {lines.map((line, idx) => (
+            <p key={idx}>{line}</p>
+          ))}
+        </div>
       </div>
     </div>
   );
